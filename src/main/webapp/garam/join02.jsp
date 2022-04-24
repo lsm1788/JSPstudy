@@ -30,17 +30,19 @@
 		<input type="hidden" name="uid" id="uid">
 	        <div>
 	            <h4>이름</h4>
-	            <input type="text" id="uname" name="uname">
+	            <input type="text" id="uname" name="uname" maxlength="6">
 	        </div>
 	
 	        <div>
 	            <h4>학교</h4>
-	            <input type="text" id="schoolname" name="schoolname">
+	            <input type="text" id="schoolname" name="schoolname" placeholder="ex) 포항고 or 포항고등학교"
+	            onfocus="this.placeholder=''" onblur="this.placeholder='ex) 포항고 or 포항고등학교'">
 	        </div>
 	
 	        <div>
 	            <h4>학년/반</h4>
-	            <input type="text" id="grade" name="gradeclass">
+	            <input type="text" id="grade" name="gradeclass" placeholder="ex) 2학년1반"
+	            onfocus="this.placeholder=''" onblur="this.placeholder='ex) 2학년1반'">
 	        </div>
 	
 	        <div class="pnum">
@@ -93,41 +95,39 @@
     </div>
 
 <script>
+var nameCheck = RegExp(/[^가-힣]{1,6}$/);
 
-if($('#pwChk').is(':checked')){
-	$('pw2').prop('type', 'text');
-	$('pw').prop('type', 'text');
-} else {
-	$('pw2').prop('type', 'password');
-	$('pw').prop('type', 'password');
-	}
+//비밀번호 표시
+$(function(){
+	$('#pwChk').on('click', function(){
+		$('#pw').toggleClass('active');
+		if($('#pw').hasClass('active')){
+			$('#pw').prop('type', 'text');
+			$('#pw2').prop('type', 'text');
+		} else {
+			$('#pw').prop('type', 'password');
+			$('#pw2').prop('type', 'password');
+		}
+	});
 });
-
-/*
-function pwshow(){
-	if(pw2.type == "password") {
-		pw2.type = "text";
-		pw.type = "text";
-	} else {
-		pw2.type = "password";
-		pw.type = "password";
-	}
-	console.log("패스워드 보이게 하기"+pw2.type);
-}
-*/
+//휴대폰번호 자리 포커스
 $("#phone1").on("keyup",function(){ 
 	if(this.value.length == 3){ 			
 		$("#phone2").focus(); 
 		
 	} 
-});
-		
+});	
 $("#phone2").on("keyup",function(){ 
 	if(this.value.length == 4){ 
 		$("#phone3").focus(); 
 	} 
 });
-
+$("#phone3").on("keyup",function(){ 
+	if(this.value.length == 4){ 
+		$("#pw").focus(); 
+	} 
+});
+//유효성 검사
 $(document).ready(function(){
 	$('#btn').click(function(){
 		
@@ -136,6 +136,13 @@ $(document).ready(function(){
 			$('#uname').focus();
 			return false;
 		}		
+		if(nameCheck.test($('#uname').val())){
+			console.log("잘못됨"+$('#uname').val());
+			alert("올바른 형식의 이름을 입력하세요");
+			$('#uname').val('');
+			$('#uname').focus();
+			return false;
+		}
 		
 		if($('#schoolname').val() == 0){
 			alert("학교명을 입력하세요");
@@ -176,7 +183,7 @@ $(document).ready(function(){
 		}
 		
 	});
-	
+//휴대폰번호 벨류값 넘겨주기	
 	$('button[type=submit]').on('click', function(){
 		var p1 = $('#phone1').val();
 		var p2 = $('#phone2').val();
