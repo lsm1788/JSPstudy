@@ -345,7 +345,7 @@ function frmchk(){
 	}
 	return true;
 }
-*/
+*/  
 </script>
 </body>
 </html>
