@@ -1,5 +1,59 @@
+<%@page import="java.sql.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+if(session.getAttribute("sessid") == null) {
+	response.sendRedirect("login.jsp");
+}
+
+String url = "jdbc:mysql://localhost:3306/garam?characterEnconding=UTF-8&serverTimezone=Asia/Seoul";
+String user = "root";
+String password = "smart";
+
+StringBuffer qry = new StringBuffer();
+qry.append(" SELECT * FROM g_member ");
+qry.append(" WHERE uid = ? ");
+String sql = qry.toString();
+
+Connection conn = null;
+PreparedStatement stmt = null;
+ResultSet rs = null;
+
+String uName = "";
+String schoolName = "";
+String phone = "";
+String gradeClass= "";
+String route = "";
+String boardingPlace = "";
+
+
+try{
+	Class.forName("com.mysql.cj.jdbc.Driver");
+	conn = DriverManager.getConnection(url, user, password);
+	stmt = conn.prepareStatement(sql);
+	
+	stmt.setString(1, (String)session.getAttribute("sessid"));
+	rs = stmt.executeQuery();
+	
+	if(rs.next()){
+		uName = rs.getString("uName");
+		schoolName = rs.getString("schoolname");
+		phone = rs.getString("uid");
+		gradeClass= rs.getString("gradeclass");
+		route = rs.getString("route");
+		boardingPlace = rs.getString("boardingplace");
+
+	}
+	
+} catch(Exception e){
+	e.getLocalizedMessage();
+} finally{
+	if(rs != null) rs.close();
+	if(conn != null) conn.close();
+	if(stmt != null) stmt.close();
+}
+
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,39 +67,39 @@
         <div class="b01 pd16">
             <div class="oH w100">
                 <div class="name fL">
-                    <b>김영희</b>님 안녕하세요!
+                    <b><%=uName %></b>님 안녕하세요!
                 </div>
                 <div class="fR">
                     <button>내정보수정</button>
-                    <button class="blue">완료</button>
+                    <a href="logout.jsp" class="blue">로그아웃</a>
                     <!--평소에는 내정보수정 버튼만 보이고, 수정 중일때만 완료버튼 표시-->
                 </div>
-            </div>  
+            </div>
 
             <table>
                 <tr>
                     <td>이름</td>
-                    <td>김영희</td>
+                    <td><%=uName %></td>
                 </tr>
                 <tr>
                     <td>휴대폰 번호</td>
-                    <td>010-6371-0370</td>
+                    <td><%=phone %></td>
                 </tr>
                 <tr>
                     <td>학교</td>
-                    <td>포항고등학교</td>
+                    <td><%=schoolName %></td>
                 </tr>
                 <tr>
                     <td>학년반</td>
-                    <td>3학년 5반</td>
+                    <td><%=gradeClass %></td>
                 </tr>
                 <tr>
                     <td>노선</td>
-                    <td>노선 A</td>
+                    <td><%=route %></td>
                 </tr>
                 <tr>
                     <td>탑승장소</td>
-                    <td>우방비치타운</td>
+                    <td><%=boardingPlace %></td>
                 </tr>
             </table>
         </div>

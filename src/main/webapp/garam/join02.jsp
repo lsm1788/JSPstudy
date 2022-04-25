@@ -95,7 +95,13 @@
     </div>
 
 <script>
-var nameCheck = RegExp(/[^가-힣]{1,6}$/);
+function chkName(str){
+	var nameCheck = /^[가-힣]{2,6}$/;
+	if(!nameCheck.test(str)){
+		return false;
+	}
+	return true;
+}
 
 //비밀번호 표시
 $(function(){
@@ -136,7 +142,7 @@ $(document).ready(function(){
 			$('#uname').focus();
 			return false;
 		}		
-		if(nameCheck.test($('#uname').val())){
+		if(!chkName($('#uname').val())){
 			console.log("잘못됨"+$('#uname').val());
 			alert("올바른 형식의 이름을 입력하세요");
 			$('#uname').val('');
@@ -181,7 +187,7 @@ $(document).ready(function(){
 			$('#pw').focus();
 			return false;
 		}
-		
+
 	});
 //휴대폰번호 벨류값 넘겨주기	
 	$('button[type=submit]').on('click', function(){
@@ -191,7 +197,7 @@ $(document).ready(function(){
 		$('#uid').val(p1+p2+p3);
 		return true;
 	});
-	
+
 });
 </script>
 </body>
