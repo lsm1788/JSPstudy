@@ -61,6 +61,22 @@ try{
   <title>내정보</title>
   <link rel="stylesheet" type="text/css" href="style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=medium-dpi" />
+<script>
+var lat; //위도
+var lon; //경도
+
+if (navigator.geolocation) {
+    //위치 정보를 얻기
+    navigator.geolocation.getCurrentPosition (function(pos) {
+        lat = pos.coords.latitude;     // 위도
+        lon = pos.coords.longitude; // 경도
+        map = document.getElementById("map");
+        map.href = map.href+"?lat="+lat+"&lon="+lon;
+    });
+} else {
+    alert("이 브라우저에서는 Geolocation이 지원되지 않습니다.")
+}
+</script>
 </head>
 
 <body class="page02">
@@ -70,7 +86,7 @@ try{
                     <b><%=uName %></b>님 안녕하세요!
                 </div>
                 <div class="fR">
-                    <button>내정보수정</button>
+                    <button onclick="location.href='mymodi.jsp'">내정보수정</button>
                     <a href="logout.jsp" class="blue">로그아웃</a>
                     <!--평소에는 내정보수정 버튼만 보이고, 수정 중일때만 완료버튼 표시-->
                 </div>
@@ -112,7 +128,7 @@ try{
                 <img src="./img/img02.png">잔여 이용 횟수
                 <span class="fR"><b>4</b>회</span>
             </div>
-            <a href="map.jsp" class="mb16">
+            <a href="map.jsp" class="mb16" id="map">
                 <img src="./img/img03.png">실시간 버스 위치<img src="./img/ico_arrow2.png" class="fR">
             </a>
             <a href="line.jsp">

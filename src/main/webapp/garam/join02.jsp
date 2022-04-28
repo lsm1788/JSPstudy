@@ -102,7 +102,21 @@ function chkName(str){
 	}
 	return true;
 }
-
+/*
+function chkPnum(a, b, c){
+	var pnumCheck1 = /^01([0|1|6|7|8|9])$/;
+	var pnumCheck2 = /^([0-9]{3,4})$/;
+	var pnumCheck3 = /^([0-9]{4})$/;
+	if(!pnumCheck1.test(a)){
+		return false;
+	} else if(!pnumCheck2.test(b)){
+		return false;
+	} else if(!pnumCheck3.test(c)){
+		return false;
+	}
+	return true;
+}
+*/
 //비밀번호 표시
 $(function(){
 	$('#pwChk').on('click', function(){
@@ -167,7 +181,15 @@ $(document).ready(function(){
 			$('#phone1').focus();
 			return false;
 		}
-		
+		/*
+		if(!chkPnum($('#phone1').val())){
+			console.log("잘못됨"+$('#phone1').val());
+			alert("올바른 형식의 번호를 입력하세요");
+			$('#phone1').val('');
+			$('#phone1').focus();
+			return false;
+		}
+		*/
 		if($('#pw').val() == 0){
 			alert("비밀번호를 입력하세요");
 			$('#pw').focus();

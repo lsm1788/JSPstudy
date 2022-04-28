@@ -1,3 +1,11 @@
+<%@page import="javax.imageio.ImageIO"%>
+<%@page import="com.google.zxing.client.j2se.MatrixToImageWriter"%>
+<%@page import="java.awt.image.BufferedImage"%>
+<%@page import="com.google.zxing.BarcodeFormat"%>
+<%@page import="com.google.zxing.common.BitMatrix"%>
+<%@page import="com.google.zxing.qrcode.QRCodeWriter"%>
+<%@page import="java.util.UUID"%>
+<%@page import="java.io.File"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -12,7 +20,34 @@
 <body class="page05 tC">
     <div class="mXY">
         <div class="qrcode">
-            <div class="qrimg" style="padding:0"><img src="qrcodeImg.jsp" style="width:100%"></div>
+            <div class="qrimg" style="padding:0">
+<%
+
+String savedFileName = "";
+String qrMsg = "{'name':'이승목'}";
+//한글깨짐 방지
+String data = new String(qrMsg.getBytes("UTF-8"), "ISO-8859-1");
+
+File path = new File(application.getRealPath("/") + "garam/qrImages/");
+savedFileName = UUID.randomUUID().toString().replace("-", "");
+
+//폴더생성
+if(!path.exists()) path.mkdirs();
+
+//폴더속 파일삭제
+File[] delFile = path.listFiles();
+for(int i =0; i < delFile.length; i++){
+	delFile[i].delete();
+};
+
+QRCodeWriter writer = new QRCodeWriter();
+BitMatrix qrCode = writer.encode(data, BarcodeFormat.QR_CODE, 200, 200);
+BufferedImage qrImage = MatrixToImageWriter.toBufferedImage(qrCode);
+File file = new File(path, savedFileName+".png");
+ImageIO.write(qrImage, "PNG", file);
+%>            
+<img src="<%=request.getContextPath()+"/garam/qrImages/"+savedFileName+".png" %>">     
+            </div>
             <span>잔여횟수</span>
             <div class="count"><b>4</b>회</div>
         </div>
@@ -28,3 +63,5 @@
     </div>
 </body>
 </html>
+<%
+%>
