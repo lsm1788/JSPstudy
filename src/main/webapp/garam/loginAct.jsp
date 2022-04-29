@@ -11,7 +11,7 @@ String url = "jdbc:mysql://localhost:3306/garam?characterEnconding=UTF-8&serverT
 String user = "root";
 String password = "smart";
 StringBuffer  qry = new StringBuffer();
-qry.append(" SELECT uid, uname, schoolname FROM garam.g_member WHERE uid = ? AND upw = ? ");
+qry.append(" SELECT uid, uname, schoolname FROM garam.g_member WHERE uid = ? AND upw = sha1(?) ");
 String sql = qry.toString();
 
 Connection conn = null;

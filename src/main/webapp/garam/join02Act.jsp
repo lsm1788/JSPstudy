@@ -11,6 +11,8 @@ upw: gkdl369
 route: B노선
 boardingplace: A장소
 */
+
+
 request.setCharacterEncoding("UTF-8");
 
 String uid = request.getParameter("uid");
@@ -26,7 +28,8 @@ String url = "jdbc:mysql://localhost:3306/garam?characterEnconding=UTF-8&serverT
 String user = "root";
 String password = "smart";
 StringBuffer qry = new StringBuffer();
-qry.append(" INSERT INTO g_member (uname, schoolname, gradeclass, uid, upw, route, boardingplace, joindate) VALUES (?, ?, ?, ?, ?, ?, ?, now()) ");
+qry.append(" INSERT INTO g_member (uname, schoolname, gradeclass, uid, upw, route, boardingplace, joindate) ");
+qry.append(" VALUES (?, ?, ?, ?, sha1(?), ?, ?, now()) ");
 String sql = qry.toString();
 
 Connection conn = null;

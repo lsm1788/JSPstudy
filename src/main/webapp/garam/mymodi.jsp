@@ -100,9 +100,9 @@ try{
 	            <h4 class="inline">탑승장소</h4> <span>(※노선을 먼저 선택해주세요)</span>
 	            <div class="sltbox">
 	                <select id="place" name="boardingplace">
-	                    <option value="A장소" <%="A노선".equals(boardingPlace)?"selected":"" %>>A장소</option>
-	                    <option value="B장소" <%="B노선".equals(boardingPlace)?"selected":"" %>>B장소</option>
-	                    <option value="C장소" <%="C노선".equals(boardingPlace)?"selected":"" %>>C장소</option>
+	                    <option value="A장소" <%="A장소".equals(boardingPlace)?"selected":"" %>>A장소</option>
+	                    <option value="B장소" <%="B장소".equals(boardingPlace)?"selected":"" %>>B장소</option>
+	                    <option value="C장소" <%="C장소".equals(boardingPlace)?"selected":"" %>>C장소</option>
 	                </select>
 	            </div>
 	        </div>

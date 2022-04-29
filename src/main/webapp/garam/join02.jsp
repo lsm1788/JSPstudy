@@ -53,13 +53,13 @@
 	        </div>
 	
 	        <div>
-	            <h4 class="inline">비밀번호</h4> <span>(※최대 12자리)</span>
-	            <input type="password" maxlength='12' id="pw" name="upw">
+	            <h4 class="inline">비밀번호</h4> <span>(※최소8자리,하나이상의 문자와숫자포함)</span>
+	            <input type="password" maxlength='20' id="pw" name="upw">
 	        </div>
 	
 	        <div>
 	            <h4>비밀번호 확인</h4>
-	            <input type="password" id="pw2" maxlength='12'>
+	            <input type="password" id="pw2" maxlength='20'>
 	            <label>
 					<input type="checkbox" id="pwChk" style="margin-top: 10px;"> 비밀번호 표시
 					<img src="./img/eye.png" height="26" width="23" style="margin-top: 9px;">
@@ -95,6 +95,7 @@
     </div>
 
 <script>
+//이름 정규식
 function chkName(str){
 	var nameCheck = /^[가-힣]{2,6}$/;
 	if(!nameCheck.test(str)){
@@ -102,21 +103,58 @@ function chkName(str){
 	}
 	return true;
 }
-/*
-function chkPnum(a, b, c){
-	var pnumCheck1 = /^01([0|1|6|7|8|9])$/;
-	var pnumCheck2 = /^([0-9]{3,4})$/;
-	var pnumCheck3 = /^([0-9]{4})$/;
-	if(!pnumCheck1.test(a)){
-		return false;
-	} else if(!pnumCheck2.test(b)){
-		return false;
-	} else if(!pnumCheck3.test(c)){
+//학교명 정규식
+function chkSchool(str){
+	var schoolChk = /^[가-힣]{3,10}$/;
+	if(!schoolChk.test(str)){
 		return false;
 	}
 	return true;
 }
-*/
+//학년 반 정규식
+function chkGrade(str){
+	var gradelChk = /^[가-힣|0-9|]{3,10}$/;
+	if(!gradelChk.test(str)){
+		return false;
+	}
+	return true;
+}
+
+//휴대폰번호 정규식
+function chkPnum(a){
+	var pnumCheck1 = /^01([0|1|6|7|8|9])$/;
+	if(!pnumCheck1.test(a)){
+		return false;
+	}
+	return true;
+}
+//휴대폰번호 정규식
+function chkPnum2(b){
+	var pnumCheck2 = /^([0-9]{3,4})$/;
+	if(!pnumCheck2.test(b)){
+		return false;
+	}
+	return true;
+}
+//휴대폰번호 정규식
+function chkPnum3(c){
+	var pnumCheck3 = /^([0-9]{4})$/;
+	if(!pnumCheck3.test(c)){
+		return false;
+	}
+	return true;
+}
+//비밀번호 정규식
+function chkPassword(pw){
+	var pwFormula = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+	if(!pwFormula.test(pw)){
+		return false;
+	}
+	return true;
+}
+	
+	
+
 //비밀번호 표시
 $(function(){
 	$('#pwChk').on('click', function(){
@@ -147,6 +185,7 @@ $("#phone3").on("keyup",function(){
 		$("#pw").focus(); 
 	} 
 });
+
 //유효성 검사
 $(document).ready(function(){
 	$('#btn').click(function(){
@@ -169,6 +208,13 @@ $(document).ready(function(){
 			$('#schoolname').focus();
 			return false;
 		}
+		if(!chkSchool($('#schoolname').val())){
+			console.log("잘못됨"+$('#schoolname').val());
+			alert("정확한 학교명을 입력하세요");
+			$('#schoolname').val('');
+			$('#schoolname').focus();
+			return false;
+		}
 		
 		if($('#grade').val() == 0){
 			alert("학년/반을 입력하세요");
@@ -176,22 +222,50 @@ $(document).ready(function(){
 			return false;
 		}
 		
-		if(($('#phone1').val().length < 3) || ($('#phone2').val().length < 4) || ($('#phone3').val().length < 4)){
+		if(!chkGrade($('#grade').val())){
+			console.log("잘못됨"+$('#grade').val());
+			alert("정확한 학년/반을 입력하세요");
+			$('#grade').val('');
+			$('#grade').focus();
+			return false;
+		}
+		
+		if(($('#phone1').val() == 0)){
 			alert("휴대폰번호를 입력하세요");
 			$('#phone1').focus();
 			return false;
 		}
-		/*
+		
 		if(!chkPnum($('#phone1').val())){
 			console.log("잘못됨"+$('#phone1').val());
-			alert("올바른 형식의 번호를 입력하세요");
+			alert("정확한 휴대폰 번호를 입력하세요");
 			$('#phone1').val('');
 			$('#phone1').focus();
 			return false;
 		}
-		*/
+		if(!chkPnum2($('#phone2').val())){
+			console.log("잘못됨"+$('#phone2').val());
+			alert("정확한 휴대폰 번호를 입력하세요");
+			$('#phone2').val('');
+			$('#phone2').focus();
+			return false;
+		}
+		if(!chkPnum3($('#phone3').val())){
+			console.log("잘못됨"+$('#phone3').val());
+			alert("정확한 휴대폰 번호를 입력하세요");
+			$('#phone3').val('');
+			$('#phone3').focus();
+			return false;
+		}
 		if($('#pw').val() == 0){
 			alert("비밀번호를 입력하세요");
+			$('#pw').focus();
+			return false;
+		}
+		if(!chkPassword($('#pw').val())){
+			console.log("잘못됨"+$('#pw').val());
+			alert("비밀번호 최소8자리, 하나이상의 문자와숫자를 입력하세요");
+			$('#pw').val('');
 			$('#pw').focus();
 			return false;
 		}
@@ -209,7 +283,6 @@ $(document).ready(function(){
 			$('#pw').focus();
 			return false;
 		}
-
 	});
 //휴대폰번호 벨류값 넘겨주기	
 	$('button[type=submit]').on('click', function(){
