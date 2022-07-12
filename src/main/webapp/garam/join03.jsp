@@ -20,7 +20,7 @@
         <button><a href="login.jsp">로그인 하러가기</a></button>
 
         <div class="cscenter">
-            가람광광여행사 고객센터<br><span>054-251-3800</span>
+            고객센터<br><span>054-123-4567</span>
         </div>
     </div>
 </body>

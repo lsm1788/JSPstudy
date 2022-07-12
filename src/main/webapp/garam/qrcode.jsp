@@ -25,7 +25,7 @@
 <%
 
 String savedFileName = "";
-String qrMsg = new Date().toString();//"{'name':'안명진'}";
+String qrMsg = new Date().toString();//"{'name':'이승목'}";
 //한글깨짐방지
 String data = new String(qrMsg.getBytes("UTF-8"), "ISO-8859-1");
 

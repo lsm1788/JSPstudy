@@ -138,7 +138,7 @@ if (navigator.geolocation) {
         
 
         <div class="cscenter">
-            가람광광여행사 고객센터 <span>054-251-3800</span><br><a href="privacy.jsp">[개인정보처리방침]</a><br>
+            고객센터 <span>054-123-4567</span><br><a href="privacy.jsp">[개인정보처리방침]</a><br>
         </div>
 
     <div class="FAB">
